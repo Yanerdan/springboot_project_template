@@ -1,1 +1,22 @@
-spring.application.name=my-project-backend
+spring:
+  mail:
+    host: smtp.163.com
+    username: deideidei2022@163.com
+    password: JUWDk39EQF7LigEk
+  rabbitmq:
+    addresses: localhost
+    username: admin
+    password: 123456
+    virtual-host: /
+  security:
+    filter:
+      order: -100
+    jwt:
+      key: yxz666
+      expire: 7
+  datasource:
+    url: jdbc:mysql://localhost:3306/study
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
