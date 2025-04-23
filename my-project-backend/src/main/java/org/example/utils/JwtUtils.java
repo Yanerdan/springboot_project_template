@@ -31,6 +31,8 @@ public class JwtUtils {
     @Resource
     StringRedisTemplate template;
 
+
+    //对传入的 JWT 进行解析和验证，若验证通过且未过期，就返回解码后的 JWT 对象；反之则返回 null。
     public DecodedJWT resolveJwt(String tokenHeader) {
         String token = convertToken(tokenHeader);
         if(token == null) return null;
@@ -46,7 +48,7 @@ public class JwtUtils {
         }
 
     }
-
+    //让指定的 JWT 失效，把该 JWT 的 ID 存入 Redis 黑名单，剩余过期时间作为存储时长。
     public boolean invalidToken(String headerToken) {
         String token = this.convertToken(headerToken);
         if(token == null) return false;
@@ -59,6 +61,7 @@ public class JwtUtils {
 
     }
 
+    // 依据用户信息生成新的 JWT，其中包含用户 ID、用户名和权限信息。
     public String createJwt(UserDetails details , int id , String username){
         Algorithm algorithm = Algorithm.HMAC256(key);
         Date expire = this.expireTime();
@@ -72,6 +75,7 @@ public class JwtUtils {
                 .sign(algorithm);
     }
 
+    //计算 JWT 的过期时间。
     public Date expireTime(){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR, expire * 24 );
